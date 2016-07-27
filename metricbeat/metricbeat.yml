@@ -39,7 +39,7 @@ metricbeat.modules:
 
     # Per process stats
     - process
-  enabled: true
+  enabled: false
   period: 10s
   processes: ['.*']
 
@@ -48,7 +48,7 @@ metricbeat.modules:
 - module: gpfs
   metricsets: ["quota"]
   enabled: true
-  period: 600s
+  period: 10s
   hosts: ["localhost"]
 
 #================================ General =====================================
