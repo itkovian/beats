@@ -1,0 +1,5 @@
+- module: gpfs
+  metricsets: ["quota"]
+  enabled: true
+  period: 600s
+  hosts: ["localhost"]

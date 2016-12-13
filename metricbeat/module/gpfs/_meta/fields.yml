@@ -1,0 +1,9 @@
+- key: gpfs
+  title: "gpfs"
+  description: >
+    gpfs Module
+  fields:
+    - name: gpfs
+      type: group
+      description: >
+      fields:

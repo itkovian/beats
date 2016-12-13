@@ -44,3 +44,11 @@ metricbeat.modules:
   processes: ['.*']
 
 
+#-------------------------------- gpfs Module --------------------------------
+- module: gpfs
+  metricsets: ["quota"]
+  enabled: true
+  period: 600s
+  hosts: ["localhost"]
+
+

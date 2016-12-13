@@ -188,6 +188,18 @@
             }
           }
         },
+        "gpfs": {
+          "properties": {
+            "quota": {
+              "properties": {
+                "example": {
+                  "ignore_above": 1024,
+                  "type": "keyword"
+                }
+              }
+            }
+          }
+        },
         "docker": {
           "properties": {
             "container": {

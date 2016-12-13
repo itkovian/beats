@@ -67,6 +67,13 @@ metricbeat.modules:
   # Password of hosts. Empty by default
   #password: test123
 
+#-------------------------------- gpfs Module --------------------------------
+- module: gpfs
+  metricsets: ["quota"]
+  enabled: true
+  period: 600s
+  hosts: ["localhost"]
+
 #------------------------------- Docker Module -------------------------------
 #- module: docker
   #metricsets: ["cpu", "info", "memory", "network", "diskio", "container"]

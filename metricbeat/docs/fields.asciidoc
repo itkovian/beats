@@ -16,6 +16,7 @@ grouped in the following categories:
 * <<exported-fields-beat>>
 * <<exported-fields-cloud>>
 * <<exported-fields-common>>
+* <<exported-fields-gpfs>>
 * <<exported-fields-docker>>
 * <<exported-fields-haproxy>>
 * <<exported-fields-kafka>>
@@ -503,6 +504,34 @@ example: metricsets
 required: True
 
 The document type. Always set to "metricsets".
+
+
+[[exported-fields-gpfs]]
+== gpfs Fields
+
+gpfs Module
+
+
+
+[float]
+== gpfs Fields
+
+
+
+
+[float]
+== quota Fields
+
+quota
+
+
+
+[float]
+=== gpfs.quota.example
+
+type: keyword
+
+Example field
 
 
 [[exported-fields-docker]]

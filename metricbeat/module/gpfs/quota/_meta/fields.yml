@@ -1,0 +1,9 @@
+- name: quota
+  type: group
+  description: >
+    quota
+  fields:
+    - name: example
+      type: keyword
+      description: >
+        Example field
