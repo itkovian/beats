@@ -1,9 +1,10 @@
 - key: gpfs
-  title: "gpfs"
+  title: "Gpfs"
   description: >
-    gpfs Module
+    gpfs usage metrics, collected from the storage backend
   fields:
     - name: gpfs
       type: group
       description: >
+        `gpfs` contains GPFS metrics
       fields:

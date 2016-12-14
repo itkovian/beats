@@ -6,7 +6,7 @@
     },
     "metricset":{
         "host":"localhost",
-        "module":"mysql",
+        "module":"gpfs",
         "name":"status",
         "rtt":44269
     },
