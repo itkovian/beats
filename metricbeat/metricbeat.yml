@@ -48,8 +48,9 @@ metricbeat.modules:
 - module: gpfs
   metricsets: ["quota"]
   enabled: true
-  period: 10s
+  period: 3600s
   hosts: ["localhost"]
+  filesystems: ["vulpixdata"]
 
 #================================ General =====================================
 

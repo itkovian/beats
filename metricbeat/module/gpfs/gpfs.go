@@ -11,8 +11,6 @@ import (
 	"github.com/elastic/beats/libbeat/logp"
 )
 
-var debugf = logp.MakeDebug("gpfs")
-
 // QuotaInfo contains the information of a single entry produced by mmrepquota
 type QuotaInfo struct {
 	filesystem string
@@ -32,9 +30,9 @@ type QuotaInfo struct {
 }
 
 // MmRepQuota is a wrapper around the mmrepquota command
-func MmRepQuota() ([]QuotaInfo, error) {
+func MmRepQuota(fs string) ([]QuotaInfo, error) {
 
-	cmd := exec.Command("mmrepquota") // TODO: pass arguments
+	cmd := exec.Command("mmrepquota", "-Y", fs) // TODO: pass arguments
 	var out bytes.Buffer
 	cmd.Stdout = &out
 
