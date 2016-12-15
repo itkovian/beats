@@ -2,18 +2,21 @@ package quota
 
 import (
 	"github.com/elastic/beats/libbeat/common"
+	"github.com/elastic/beats/libbeat/logp"
 	"github.com/elastic/beats/metricbeat/mb"
 	"github.com/elastic/beats/metricbeat/module/gpfs"
-
-	"github.com/pkg/errors"
 )
+
+var debugf = logp.MakeDebug("gpfs-quota")
 
 // init registers the MetricSet with the central registry.
 // The New method will be called after the setup of the module and before starting to fetch data
 func init() {
 	if err := mb.Registry.AddMetricSet("gpfs", "quota", New); err != nil {
+		logp.Err("Aaaaargh, no cigar")
 		panic(err)
 	}
+	logp.Warn("quota init ran")
 }
 
 // MetricSet type defines all fields of the MetricSet
@@ -33,6 +36,7 @@ func New(base mb.BaseMetricSet) (mb.MetricSet, error) {
 	if err := base.Module().UnpackConfig(&config); err != nil {
 		return nil, err
 	}
+	logp.Warn("Creating a new instance of the quota Metricset")
 
 	return &MetricSet{
 		BaseMetricSet: base,
@@ -45,8 +49,9 @@ func New(base mb.BaseMetricSet) (mb.MetricSet, error) {
 func (m *MetricSet) Fetch() ([]common.MapStr, error) {
 
 	gpfsQuota, err := gpfs.MmRepQuota() // TODO: get this for each filesystem
+	logp.Warn("retrieved quota information from mmrepquota")
 	if err != nil {
-		return nil, errors.Wrap(err, "gpfs quota")
+		panic("Could not get quota information")
 	}
 
 	quota := make([]common.MapStr, 0, len(gpfsQuota))

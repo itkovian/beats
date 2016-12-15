@@ -8,7 +8,10 @@ import (
 	"strings"
 
 	"github.com/elastic/beats/libbeat/common"
+	"github.com/elastic/beats/libbeat/logp"
 )
+
+var debugf = logp.MakeDebug("gpfs")
 
 // QuotaInfo contains the information of a single entry produced by mmrepquota
 type QuotaInfo struct {
@@ -37,6 +40,7 @@ func MmRepQuota() ([]QuotaInfo, error) {
 
 	err := cmd.Run()
 	if err != nil {
+		logp.Err("Command mmrepquota did not run correctly!")
 		var nope []QuotaInfo
 		return nope, errors.New("mmrepquota failed")
 	}
@@ -70,44 +74,64 @@ func GetQuotaEvent(quota *QuotaInfo) common.MapStr {
 	}
 }
 
+// parseCertainInt parses a string into an integer value, and discards the error
+func parseCertainInt(s string) int64 {
+	v, err := strconv.ParseInt(s, 10, 64)
+	if err != nil {
+		logp.Err("Oops, could not parse an int from %s", s)
+		panic(err)
+	}
+	return v
+}
+
 // ParseMmRepQuota converts the lines into the desired information
-func parseMmRepQuota(output string) (qs []QuotaInfo, err error) {
+func parseMmRepQuota(output string) ([]QuotaInfo, error) {
 
 	lines := strings.Split(output, "\n")
 	fieldMap := parseMmRepQuotaHeader(lines[0])
 
+	var qs = make([]QuotaInfo, 0, 100000)
+
 	for _, line := range lines[1:] {
+		if line == "" {
+			continue
+		}
+		logp.Info("Processing line %s", line)
 		fields := strings.Split(line, ":")
 		qi := QuotaInfo{
 			filesystem: fields[fieldMap["filesystemName"]],
 			fileset:    fields[fieldMap["filesetname"]],
 			kind:       fields[fieldMap["quotaType"]],
 			entity:     fields[fieldMap["name"]],
-			blockUsage: strconv.ParseInt(fields[fieldMap["blockUsage"]], 64),
-			blockSoft:  strconv.ParseInt(fields[fieldMap["blockQuota"]], 64),
-			blockHard:  strconv.ParseInt(fields[fieldMap["blockLimit"]], 64),
-			blockDoubt: strconv.ParseInt(fields[fieldMap["blockInDoubt"]], 64),
+			blockUsage: parseCertainInt(fields[fieldMap["blockUsage"]]),
+			blockSoft:  parseCertainInt(fields[fieldMap["blockQuota"]]),
+			blockHard:  parseCertainInt(fields[fieldMap["blockLimit"]]),
+			blockDoubt: parseCertainInt(fields[fieldMap["blockInDoubt"]]),
 			blockGrace: fields[fieldMap["blockGrace"]],
-			filesUsage: strconv.ParseInt(fields[fieldMap["filesUsage"]], 64),
-			filesSoft:  strconv.ParseInt(fields[fieldMap["filesQuota"]], 64),
-			filesHard:  strconv.ParseInt(fields[fieldMap["filesLimit"]], 64),
-			filesDoubt: strconv.ParseInt(fields[fieldMap["filesInDoubt"]], 64),
+			filesUsage: parseCertainInt(fields[fieldMap["filesUsage"]]),
+			filesSoft:  parseCertainInt(fields[fieldMap["filesQuota"]]),
+			filesHard:  parseCertainInt(fields[fieldMap["filesLimit"]]),
+			filesDoubt: parseCertainInt(fields[fieldMap["filesInDoubt"]]),
 			filesGrace: fields[fieldMap["filesGrace"]],
 		}
-		qs.append(qi)
+		qs = append(qs, qi)
 	}
-	return
+	return qs, nil
 }
 
 // parseMmRepQuotaHeader builds a map of the field names and the corresponding index
-func parseMmRepQuotaHeader(header string) (m map[string]int) {
+func parseMmRepQuotaHeader(header string) map[string]int {
+
+	var m = make(map[string]int)
 
 	for i, s := range strings.Split(header, ":") {
-		if s != "" {
+		if s == "" {
 			continue
 		}
+		logp.Info("Currently processing header entry %d: %s", i, s)
 		m[s] = i
 	}
+	logp.Info("All headers processed")
 
-	return
+	return m
 }

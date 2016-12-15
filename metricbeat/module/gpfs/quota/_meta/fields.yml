@@ -7,54 +7,67 @@
       type: keyword
       description: >
         Filesystem name (should be unique across your setup)
+
     - name: fileset
       type: keyword
       description: >
         Fileset for which the usage was counted
+
     - name: kind
       type: keyword
       description: >
         Quota type: USR, FILESET, GRP
+
     - name: entity
       type: keyword
       description: >
         The owner of the quota (user, vo, ...)
+
     - name: block_usage
       type: long
       description: >
         1KiB blocks used
+
     - name: block_soft
       type: long
       description: >
         1KiB blocks soft limit
+
     - name: block_hard
       type: long
       description: >
         1KiB blocks hard limit
+
     - name: block_doubt
       type: long
       description: >
         1KiB blocks in doubt status
+
     - name: block_grace
       type: text
       description: >
         Remaining grace period or expired
+
     - name: files_usage
       type: long
       description: >
         inodes used
+
     - name: files_soft
       type: long
       description: >
         inodes quota soft limit
+
     - name: files_hard
       type: long
       description: >
         inodes quota hard limit
+
     - name: files_doubt
       type: long
       description: >
         inodes in doubt status
+
     - name: files_grace
       type: text
       description: >
