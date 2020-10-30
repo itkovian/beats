@@ -206,6 +206,8 @@ func newSaramaConfig(log *logp.Logger, config *kafkaConfig) (*sarama.Config, err
 		k.Net.SASL.Enable = true
 		k.Net.SASL.User = config.Username
 		k.Net.SASL.Password = config.Password
+		k.Net.SASL.Mechanism = sarama.SASLTypePlaintext
+		logp.Info("Settting mechanism to Plaintext")
 	}
 
 	// configure metadata update properties

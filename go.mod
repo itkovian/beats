@@ -72,6 +72,8 @@ require (
 	github.com/elastic/go-ucfg v0.8.3
 	github.com/elastic/go-windows v1.0.1 // indirect
 	github.com/elastic/gosigar v0.10.6-0.20200715000138-f115143bb233
+	//github.com/elastic/sarama v1.19.0 // indirect
+	//github.com/Shopify/sarama v1.27.0 // indirect
 	github.com/fatih/color v1.5.0
 	github.com/fsnotify/fsevents v0.0.0-00010101000000-000000000000
 	github.com/fsnotify/fsnotify v1.4.7
