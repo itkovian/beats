@@ -71,6 +71,7 @@ func makeKafka(
 		return outputs.Fail(err)
 	}
 
+	logp.Info("Making Sarama Config")
 	libCfg, err := newSaramaConfig(log, config)
 	if err != nil {
 		return outputs.Fail(err)

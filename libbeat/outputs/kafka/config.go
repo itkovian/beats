@@ -165,6 +165,7 @@ func newSaramaConfig(log *logp.Logger, config *kafkaConfig) (*sarama.Config, err
 	if err != nil {
 		return nil, err
 	}
+	logp.Warn("Setting up sarama config")
 
 	k := sarama.NewConfig()
 
