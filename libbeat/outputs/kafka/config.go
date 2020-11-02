@@ -168,6 +168,7 @@ func newSaramaConfig(log *logp.Logger, config *kafkaConfig) (*sarama.Config, err
 	logp.Warn("Setting up sarama config")
 
 	k := sarama.NewConfig()
+	sarama.logger = logp
 
 	// configure network level properties
 	timeout := config.Timeout
@@ -208,7 +209,7 @@ func newSaramaConfig(log *logp.Logger, config *kafkaConfig) (*sarama.Config, err
 		k.Net.SASL.User = config.Username
 		k.Net.SASL.Password = config.Password
 		k.Net.SASL.Mechanism = sarama.SASLTypePlaintext
-		logp.Info("Settting mechanism to Plaintext")
+		logp.Info("Setting mechanism to Plaintext")
 	}
 
 	// configure metadata update properties
