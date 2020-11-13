@@ -170,7 +170,6 @@ func newSaramaConfig(log *logp.Logger, config *kafkaConfig) (*sarama.Config, err
 	k := sarama.NewConfig()
 
 	logp.Info("Setting up sarama logger")
-	sarama.Logger = logp
 
 	// configure network level properties
 	timeout := config.Timeout
